@@ -3,7 +3,7 @@ resources:
     type: GitRepo
     configuration:
       gitProvider: my_github
-      path: katcosgrove/devops-101-ato
+      path: threathog/devops-101-ato
       branches:
         include: master
   - name: myBuildInfo
@@ -11,8 +11,8 @@ resources:
     configuration:
       sourceArtifactory: art
       buildName: SampleApp
-      buildNumber: 1          
-pipelines:  
+      buildNumber: 1
+pipelines:
   - name: basic_pipeline
     steps:
       - name: step_1
@@ -21,7 +21,7 @@ pipelines:
           inputResources:
             - name: myGitRepo
           outputResources:
-            - name: myBuildInfo             
+            - name: myBuildInfo
         execution:
           onExecute:
             - if [ -z $app_version ]; then add_pipeline_variables app_version=1.0.0; else app_version=$(bump_semver $app_version minor); fi
@@ -33,7 +33,7 @@ pipelines:
         configuration:
           inputResources:
             - name: myBuildInfo
-            - name: myGitRepo            
+            - name: myGitRepo
           runtime:
             type: image
             image:
@@ -74,9 +74,9 @@ pipelines:
         configuration:
           inputSteps:
             - name: step_3
-            - name: step_4  
+            - name: step_4
           integrations:
-            - name: my_github            
+            - name: my_github
         execution:
           onExecute:
             - 'curl -H "Authorization: token ${int_my_github_token}" ${int_my_github_url}/rate_limit'
